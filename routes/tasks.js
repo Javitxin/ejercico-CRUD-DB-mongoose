@@ -7,8 +7,8 @@ router.post('create', async (req, res) => {
         const taskTitle = req.body.title;
         const taskCompleted = req.body.completed;
         const task = new Task({ title: taskTitle, completed: taskCompleted });
-        await task.save();
-        res.status(201).json(task);
+        const tasks = await task.save();
+        res.status(201).json(tasks);
     } catch (error) {
         console.error(error)
         res.status(500).send({ message: 'problema al crear la bd' });
