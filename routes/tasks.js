@@ -18,7 +18,7 @@ router.post('create', async (req, res) => {
 router.get('/', async (req, res) => {
     try {
         const tasks = await Task.find();
-        res.status(201).json(tasks);
+        res.status(tasks);
 
     } catch (error) {
         console.error(error)
@@ -26,11 +26,11 @@ router.get('/', async (req, res) => {
     }
 })
 
-router.get('/id/:id', async (req, res) => {
+router.get('/id/:_id', async (req, res) => {
     try {
-        const id = req.params;
+        const id = req.params._id;
         const tasks = await Task.find(id);
-        res.status(201).json(tasks);
+        res.status(tasks).json(tasks);
 
     } catch (error) {
         console.error(error)
@@ -38,9 +38,9 @@ router.get('/id/:id', async (req, res) => {
     }
 })
 
-router.get('/markAsCompleted/:_id', async (req, res) => {
+router.put('/markAsCompleted/:_id', async (req, res) => {
     try {
-        const id = req.params;
+        const id = req.params._id;
         const tasks = await Task.findByIdAndUpdate(id, { completed: true }, { new: true });
         res.status(201).json(tasks);
 
@@ -50,11 +50,11 @@ router.get('/markAsCompleted/:_id', async (req, res) => {
     }
 })
 
-router.put('/id/:id', async (req, res) => {
+router.put('/id/:_id', async (req, res) => {
     try {
-        const id = req.params;
+        const id = req.params._id;
         const title = req.body.title;
-        const tasks = await Task.findOneAndUpdate(id, { title: title }, { new: true });
+        const tasks = await Task.findByIdAndUpdate(id, { title: title }, { new: true });
         res.status(201).json(tasks);
 
     } catch (error) {
@@ -63,9 +63,9 @@ router.put('/id/:id', async (req, res) => {
     }
 })
 
-router.delete('/id/:id', async (req, res) => {
+router.delete('/id/:_id', async (req, res) => {
     try {
-        const id = req.params;
+        const id = req.params._id;
 
         const tasks = await Task.findByIdAndDelete(id);
         res.status(201).json({ message: 'dato Borrado' });
